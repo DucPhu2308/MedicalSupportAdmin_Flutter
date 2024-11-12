@@ -1,4 +1,5 @@
 import 'package:bt_flutter/api/auth_api.dart';
+import 'package:bt_flutter/layouts/default_layout_log_reg.dart';
 import 'package:bt_flutter/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -30,90 +31,122 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 10),
-            MyTextField(
-                label: 'Họ và tên đệm', controller: _firstNameController),
-            MyTextField(label: 'Tên', controller: _lastNameController),
-            MyTextField(label: 'Email', controller: _emailController),
-            MyTextField(
-              label: 'Mật khẩu',
-              controller: _passwordController,
-              isPassword: true,
+    return DefaultLayoutLogReg(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(10),
             ),
-            MyTextField(
-              label: 'Xác nhận mật khẩu',
-              controller: _confirmPasswordController,
-              isPassword: true,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (_emailController.text.isEmpty ||
-                    _passwordController.text.isEmpty ||
-                    _confirmPasswordController.text.isEmpty) {
-                  Fluttertoast.showToast(
-                    msg: 'Vui lòng nhập đầy đủ thông tin',
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                  );
-                  return;
-                }
-                if (_passwordController.text !=
-                    _confirmPasswordController.text) {
-                  Fluttertoast.showToast(
-                    msg: 'Mật khẩu không khớp',
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                  );
-                  return;
-                }
-                AuthAPI.register(
-                  _emailController.text,
-                  _passwordController.text,
-                  _firstNameController.text,
-                  _lastNameController.text,
-                ).then((value) => {
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'ĐĂNG KÝ',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                MyTextField(
+                    label: 'Họ và tên đệm', controller: _firstNameController),
+                MyTextField(label: 'Tên', controller: _lastNameController),
+                MyTextField(label: 'Email', controller: _emailController),
+                MyTextField(
+                  label: 'Mật khẩu',
+                  controller: _passwordController,
+                  isPassword: true,
+                ),
+                MyTextField(
+                  label: 'Xác nhận mật khẩu',
+                  controller: _confirmPasswordController,
+                  isPassword: true,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(16),
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {
+                    if (_emailController.text.isEmpty ||
+                        _passwordController.text.isEmpty ||
+                        _confirmPasswordController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                        msg: 'Vui lòng nhập đầy đủ thông tin',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                      return;
+                    }
+                    // validate email
+                    final emailPattern =
+                        RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                    if (!emailPattern.hasMatch(_emailController.text)) {
+                      Fluttertoast.showToast(
+                        msg: 'Email không hợp lệ',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                      return;
+                    }
+                    if (_passwordController.text !=
+                        _confirmPasswordController.text) {
+                      Fluttertoast.showToast(
+                        msg: 'Mật khẩu không khớp',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                      return;
+                    }
+                    AuthAPI.register(
+                      _emailController.text,
+                      _passwordController.text,
+                      _firstNameController.text,
+                      _lastNameController.text,
+                    ).then((value) {
+                      if (value['statusCode'] == 400) {
+                        Fluttertoast.showToast(
+                          msg: value['message'].toString(),
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                        );
+                        return;
+                      }
                       Fluttertoast.showToast(
                         msg: 'Đăng ký thành công',
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,
-                      ),
+                      );
                       Navigator.pushNamed(context, '/otp',
-                          arguments: _emailController.text),
+                          arguments: _emailController.text);
                     });
-              },
-              child: const Text('Đăng ký'),
+                  },
+                  child: const Text(
+                    'Đăng ký',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  child: const Text('Đã có tài khoản? Đăng nhập ngay'),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () async {
-                Navigator.pushNamed(context, '/login');
-              },
-              child: const Text('Đã có tài khoản? Đăng nhập ngay'),
-            ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildTextField(String label, TextEditingController controller,
-      {bool isPassword = false}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          labelText: label,
-        ),
-        obscureText: isPassword, // Ẩn mật khẩu nếu là trường password
       ),
     );
   }
