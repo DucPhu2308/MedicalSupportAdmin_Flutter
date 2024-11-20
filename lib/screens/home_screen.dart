@@ -93,20 +93,43 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  user!.lastName,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  user!.firstName + ' ' + user!.lastName,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   user!.email,
                   style: const TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                const SizedBox(
+                    height: 20), // Tạo khoảng cách giữa thông tin và nút
+                ElevatedButton(
+                  onPressed: () async {
+                    // Xóa dữ liệu người dùng khỏi SharedPreferences
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.remove('user'); // Xóa thông tin người dùng
+                    await prefs.remove('token'); // Xóa token
+
+                    // Chuyển hướng về màn hình đăng nhập
+                    Navigator.pushReplacementNamed(context, '/login');
+
+                    // Đóng dialog sau khi nhấn đăng xuất
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Đăng xuất'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red, // Màu đỏ cho nút đăng xuất
+                  ),
                 ),
               ],
             ),
@@ -139,9 +162,3 @@ class ManageDepartmentsPage extends StatelessWidget {
   }
 }
 
-// Trang duyệt bác sĩ
-// class ApproveDoctorsPage extends StatelessWidget {
-//   PermissionDoctorScreen({super.key});
-
-
-// }

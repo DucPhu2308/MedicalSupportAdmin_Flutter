@@ -3,6 +3,7 @@ import 'package:bt_flutter/screens/home_screen.dart';
 import 'package:bt_flutter/screens/intro_screen.dart';
 import 'package:bt_flutter/screens/login_screen.dart';
 import 'package:bt_flutter/screens/otp_screen.dart';
+import 'package:bt_flutter/screens/permission_doctor_screen.dart';
 import 'package:bt_flutter/screens/register_screen.dart';
 import 'package:bt_flutter/screens/reset_password_screen.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class MainApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/reset-password': (context) => const ResetPasswordScreen(),
         '/forgot-password': (context) => const ForgotPasswordScreen(),
+        '/permission-doctor': (context) => const PermissionDoctorScreen(),
       }),
     );
   }
