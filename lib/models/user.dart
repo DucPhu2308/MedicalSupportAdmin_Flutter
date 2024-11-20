@@ -1,3 +1,5 @@
+import 'package:bt_flutter/models/doctor-info.dart';
+
 class User {
   String? id;
   String firstName;
@@ -7,6 +9,7 @@ class User {
   List<String> roles;
   DateTime createdAt;
   DateTime updatedAt;
+  DoctorInfo? doctorInfo;
 
   User({
     this.id,
@@ -17,6 +20,7 @@ class User {
     required this.roles,
     required this.createdAt,
     required this.updatedAt,
+    this.doctorInfo,
   });
 
   User.fromJson(Map<String, dynamic> json)
