@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        automaticallyImplyLeading: false, // Ẩn nút back
         actions: [
           if (user != null)
             Padding(
@@ -122,9 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // Chuyển hướng về màn hình đăng nhập
                     Navigator.pushReplacementNamed(context, '/login');
-
-                    // Đóng dialog sau khi nhấn đăng xuất
-                    Navigator.pop(context);
                   },
                   child: const Text('Đăng xuất'),
                   style: ElevatedButton.styleFrom(
@@ -161,4 +159,3 @@ class ManageDepartmentsPage extends StatelessWidget {
     );
   }
 }
-
