@@ -10,6 +10,7 @@ class User {
   DateTime createdAt;
   DateTime updatedAt;
   DoctorInfo? doctorInfo;
+  String? avatar;
 
   User({
     this.id,
@@ -21,6 +22,7 @@ class User {
     required this.createdAt,
     required this.updatedAt,
     this.doctorInfo,
+    this.avatar,
   });
 
   User.fromJson(Map<String, dynamic> json)
@@ -30,8 +32,10 @@ class User {
         email = json['email'],
         isActive = json['isActive'],
         roles = List<String>.from(json['roles']),
+        avatar = json['avatar'],
         createdAt = DateTime.parse(json['createdAt']),
         updatedAt = DateTime.parse(json['updatedAt']);
+        
 
   Map<String, dynamic> toJson() => {
         'firstName': firstName,
@@ -41,5 +45,6 @@ class User {
         'roles': roles,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
+        'avatar': avatar,
       };
 }

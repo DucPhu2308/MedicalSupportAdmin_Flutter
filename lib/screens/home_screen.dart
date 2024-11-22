@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Text(_selectedIndex == 0 ? 'Quản lý khoa' : 'Duyệt bác sĩ'),
         automaticallyImplyLeading: false, // Ẩn nút back
         actions: [
           if (user != null)
@@ -42,9 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   _showUserInfo(context);
                 },
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   backgroundImage: NetworkImage(
-                    'https://via.placeholder.com/150', // Placeholder image
+                     user?.avatar ?? 'https://via.placeholder.com/150' // Ảnh đại diện
                   ),
                 ),
               ),

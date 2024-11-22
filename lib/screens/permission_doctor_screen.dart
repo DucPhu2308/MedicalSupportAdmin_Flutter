@@ -153,7 +153,7 @@ class _PermissionDoctorScreenState extends State<PermissionDoctorScreen> {
                                     // Ảnh đại diện
                                     CircleAvatar(
                                       radius: 30,
-                                      backgroundImage: NetworkImage(doctor['avatar'] ?? ''),
+                                      backgroundImage: NetworkImage(doctor['avatar'] ?? 'https://via.placeholder.com/150'),
                                       onBackgroundImageError: (_, __) => const Icon(Icons.person),
                                     ),
                                     const SizedBox(width: 12),
