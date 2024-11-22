@@ -4,7 +4,7 @@ import 'dart:async';
 class DefaultLayoutLogReg extends StatefulWidget {
   final Widget child;
 
-  const DefaultLayoutLogReg({Key? key, required this.child}) : super(key: key);
+  const DefaultLayoutLogReg({super.key, required this.child});
 
   @override
   _DefaultLayoutLogRegState createState() => _DefaultLayoutLogRegState();

@@ -16,7 +16,7 @@ class _IntroScreenState extends State<IntroScreen> {
     Timer(const Duration(seconds: 1), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     });
   }
@@ -46,10 +46,10 @@ class _IntroScreenState extends State<IntroScreen> {
       children: [
         Text(
           name,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         Text(role),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }

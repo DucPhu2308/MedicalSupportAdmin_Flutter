@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  user!.firstName + ' ' + user!.lastName,
+                  '${user!.firstName} ${user!.lastName}',
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -124,10 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Chuyển hướng về màn hình đăng nhập
                     Navigator.pushReplacementNamed(context, '/login');
                   },
-                  child: const Text('Đăng xuất'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red, // Màu đỏ cho nút đăng xuất
                   ),
+                  child: const Text('Đăng xuất'),
                 ),
               ],
             ),
@@ -144,10 +144,10 @@ class ManageDepartmentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Icon(Icons.business, size: 100, color: Colors.blue),
           SizedBox(height: 20),
           Text(

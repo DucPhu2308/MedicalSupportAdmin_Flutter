@@ -10,7 +10,7 @@ class DoctorApi extends BaseApi {
       );
       return json.decode(response.body);
     } catch (e) {
-      print("Error: " + e.toString());
+      print("Error: $e");
     }
   }
 
@@ -25,7 +25,7 @@ class DoctorApi extends BaseApi {
       );
       return json.decode(response.body);
     } catch (e) {
-      print("Error: " + e.toString());
+      print("Error: $e");
     }
   }
 
@@ -40,7 +40,7 @@ class DoctorApi extends BaseApi {
       );
       return json.decode(response.body);
     } catch (e) {
-      print("Error: " + e.toString());
+      print("Error: $e");
     }
   }
 }

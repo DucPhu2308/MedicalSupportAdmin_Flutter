@@ -15,7 +15,7 @@ class AuthAPI extends BaseApi {
       );
       return json.decode(response.body);
     } catch (e) {
-      print("Error: " + e.toString());
+      print("Error: $e");
     }
   }
 
@@ -37,7 +37,7 @@ class AuthAPI extends BaseApi {
       );
       return json.decode(response.body);
     } catch (e) {
-      print("Error: " + e.toString());
+      print("Error: $e");
     }
   }
 
@@ -52,7 +52,7 @@ class AuthAPI extends BaseApi {
       );
       return json.decode(response.body);
     } catch (e) {
-      print("Error: " + e.toString());
+      print("Error: $e");
     }
   }
 
@@ -69,7 +69,7 @@ class AuthAPI extends BaseApi {
       }
       return response.body;
     } catch (e) {
-      print("Error: " + e.toString());
+      print("Error: $e");
     }
   }
 
@@ -88,7 +88,7 @@ class AuthAPI extends BaseApi {
       }
       return response.body;
     } catch (e) {
-      print("Error: " + e.toString());
+      print("Error: $e");
     }
   }
 }

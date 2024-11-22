@@ -111,7 +111,7 @@ class _PermissionDoctorScreenState extends State<PermissionDoctorScreen> {
                         searchQuery = value;
                       });
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Tìm kiếm bác sĩ',
                       border: OutlineInputBorder(),
                     ),
@@ -195,7 +195,7 @@ class _PermissionDoctorScreenState extends State<PermissionDoctorScreen> {
                             );
                           },
                         )
-                      : Center(child: Text('Không có bác sĩ')),
+                      : const Center(child: Text('Không có bác sĩ')),
                 ),
               ],
             ),
