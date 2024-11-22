@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'package:bt_flutter/screens/permission_doctor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bt_flutter/models/user.dart';
+import 'package:bt_flutter/screens/manage_departments_page.dart';
+import 'package:bt_flutter/screens/permission_doctor_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,10 +14,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   User? user;
-  bool isLoading = true; // Trạng thái tải dữ liệu
-  int _selectedIndex = 0; // Vị trí hiện tại trong BottomNavigationBar
+  bool isLoading = true;
+  int _selectedIndex = 0;
 
-  // Danh sách các trang cho từng mục
   final List<Widget> _pages = [
     const ManageDepartmentsPage(),
     const PermissionDoctorScreen(),
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_selectedIndex == 0 ? 'Quản lý khoa' : 'Duyệt bác sĩ'),
-        automaticallyImplyLeading: false, // Ẩn nút back
+        automaticallyImplyLeading: false,
         actions: [
           if (user != null)
             Padding(
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: CircleAvatar(
                   backgroundImage: NetworkImage(
-                     user?.avatar ?? 'https://via.placeholder.com/150' // Ảnh đại diện
+                    user?.avatar ?? 'https://via.placeholder.com/150',
                   ),
                 ),
               ),
@@ -53,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : _pages[_selectedIndex], // Hiển thị trang tương ứng
+          : _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
-            _selectedIndex = index; // Thay đổi trang
+            _selectedIndex = index;
           });
         },
         items: const [
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
     setState(() {
-      isLoading = false; // Dừng trạng thái tải
+      isLoading = false;
     });
   }
 
@@ -102,31 +102,28 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  user!.firstName + ' ' + user!.lastName,
+                  '${user?.firstName} ${user?.lastName}',
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  user!.email,
+                  user?.email ?? '',
                   style: const TextStyle(fontSize: 16, color: Colors.grey),
                 ),
-                const SizedBox(
-                    height: 20), // Tạo khoảng cách giữa thông tin và nút
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    // Xóa dữ liệu người dùng khỏi SharedPreferences
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
-                    await prefs.remove('user'); // Xóa thông tin người dùng
-                    await prefs.remove('token'); // Xóa token
+                    await prefs.remove('user');
+                    await prefs.remove('token');
 
-                    // Chuyển hướng về màn hình đăng nhập
                     Navigator.pushReplacementNamed(context, '/login');
                   },
                   child: const Text('Đăng xuất'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red, // Màu đỏ cho nút đăng xuất
+                    backgroundColor: Colors.red,
                   ),
                 ),
               ],
@@ -134,28 +131,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-// Trang quản lý khoa
-class ManageDepartmentsPage extends StatelessWidget {
-  const ManageDepartmentsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(Icons.business, size: 100, color: Colors.blue),
-          SizedBox(height: 20),
-          Text(
-            'Quản lý khoa',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
     );
   }
 }
