@@ -41,7 +41,6 @@ class _PermissionDoctorScreenState extends State<PermissionDoctorScreen> {
 
   Future<void> _grantPermission(String doctorId, int index) async {
     try {
-      print (doctorId);
       // Cập nhật trạng thái "cấp quyền" qua API
       final result = await DoctorApi.grantDoctorPermission(doctorId);
       setState(() {
@@ -60,7 +59,6 @@ class _PermissionDoctorScreenState extends State<PermissionDoctorScreen> {
 
   Future<void> _removePermission(String doctorId, int index) async {
     try {
-      print(doctorId);
       // Cập nhật trạng thái "remove permission" qua API
       final result = await DoctorApi.removeDoctorPermission(doctorId);
       setState(() {
