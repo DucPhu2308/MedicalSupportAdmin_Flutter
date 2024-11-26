@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bt_flutter/api/auth_api.dart';
 import 'package:bt_flutter/layouts/default_layout_log_reg.dart';
+import 'package:bt_flutter/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,7 +71,19 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
       final String token = value['token'].toString();
-      final user = value['user'];
+      final user = User.fromJson(value['user']);
+      if (!user.roles.contains('ADMIN')) {
+        Fluttertoast.showToast(
+          msg: 'Tài khoản không có quyền truy cập',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        return;
+      }
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('token', token);
       prefs.setString('user', jsonEncode(user));
